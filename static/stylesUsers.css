@@ -1,0 +1,21 @@
+.div-list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.div-item{
+    border: 3px solid green;
+    border-radius: 3px;
+    margin: 10px;
+    padding: 5px;
+}
+button{
+    height: 50px;
+    width: 100px;
+    background: -moz-linear-gradient(#00BBD6, #EBFFFF);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#00BBD6), to(#EBFFFF));
+    /* background-color: hotpink; */
+    border-radius: 10px;
+    font-size: 1rem;
+}
