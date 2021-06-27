@@ -23,6 +23,12 @@ app.get('/register', (req, res) =>res.render('register'));
 
 app.post('/login', (req,res)=>{
  
+  console.log(req.params);
+  console.log('+++++++++++++++');
+  console.log(req.query);
+  console.log('+++++++++++++++');
+  console.log(req.body);
+
   let tmpUser = users.find(item=>item.name===req.body.name);
   
   if (!tmpUser){
