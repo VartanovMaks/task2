@@ -1,17 +1,25 @@
+const userService = require('../service/user.service');
+
 module.exports = {
     getAllUsers:(req,res)=>{
-        res.json('Get all users');
+        const users = userService.showAll();
+        res.json(users);
     },
     addNewUser:(req,res)=>{
-        res.json('Add new user');
+        userService.addOne(req.body);
+        res.json(req.body);
     },
     getUserById:(req,res)=>{
-        res.json({msg:'get user by id', id:req.params.userId});
+        const user = userService.showOne(req.params.userId)
+        // res.json({msg:'get user by id', id:req.params.userId});
+        res.json(user);
     },
     removeUserById:(req,res)=>{
+        userService.deleteOne(req.params.userId);
         res.json({msg:'remove user by id', id:req.params.userId});
     },
     editUserById:(req,res)=>{
+        userService.editOne(req.body, req.params.userId);
         res.json({msg:'edit user by id', id:req.params.userId});
     }
 }

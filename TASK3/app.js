@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const rootRouter = require('./router/root.router');
 const userRouter = require('./router/user.router');
-const users = require('./database/users');
 
 const app = express();
 
