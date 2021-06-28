@@ -1,4 +1,4 @@
-const userService = require('../service/user.service');
+const {userService} = require('../service');
 
 module.exports = {
     getAllUsers:(req,res)=>{
@@ -11,7 +11,6 @@ module.exports = {
     },
     getUserById:(req,res)=>{
         const user = userService.showOne(req.params.userId)
-        // res.json({msg:'get user by id', id:req.params.userId});
         res.json(user);
     },
     removeUserById:(req,res)=>{

@@ -14,4 +14,11 @@ module.exports = {
     editOne:(userData, userId)=>{
         return users[userId]=userData;
     },
+    checkUserId:(userId)=>{
+        let user= undefined; 
+        if(userId >= 0 && userId < users.length){
+           user = users[userId];
+        }
+        return user;
+    }
 };
