@@ -10,8 +10,7 @@ module.exports = {
         res.json(req.body);
     },
     getUserById:(req,res)=>{
-        const user = userService.showOne(req.params.userId)
-        // res.json({msg:'get user by id', id:req.params.userId});
+        const {user} = req;
         res.json(user);
     },
     removeUserById:(req,res)=>{
@@ -19,7 +18,9 @@ module.exports = {
         res.json({msg:'remove user by id', id:req.params.userId});
     },
     editUserById:(req,res)=>{
-        userService.editOne(req.body, req.params.userId);
+        const index = req.user.index;
+        delete req.user.index;
+        userService.editOne(req.body, index);
         res.json({msg:'edit user by id', id:req.params.userId});
     }
 }

@@ -6,12 +6,23 @@ module.exports = {
         users.push(user);
     },
     showOne:(userId)=>{
-        return users[userId];
+        return 
     },
     deleteOne:(userId)=>{
         users.splice(userId,1);
     },
-    editOne:(userData, userId)=>{
-        return users[userId]=userData;
+    editOne:(userData, userIndex)=>{
+        return users[userIndex]=userData;
     },
+    checkUserId:(userId)=>{
+     
+        const user = users.find((user, index)=>{
+            if (user.id.toString() === userId){
+                user.index = index;
+                return user;
+            }
+        });
+        
+        return user;
+    }
 };
