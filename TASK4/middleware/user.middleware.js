@@ -1,17 +1,21 @@
-const userService=require('../service/user.service');
+const { User } = require('../dataBase');
 
 module.exports = {
-    checkIsUserExists: (req, res, next)=>{
-        const {userId} = req.params;
-        const userById = userService.checkUserId(userId);
-
-        if(!userById) {
-            throw new Error(`User with id ${userId} not found`);
+    checkIsUserExists: async (req, res, next)=>{
+        try{
+            const {userId} = req.params;
+            const userById = await User.findById(userId);
+            
+            if(!userById) {
+                throw new Error(`User with id ${userId} not found`);
+            }
+            
+            req.user = userById;
+            
+            next();
+        } catch (e) {
+            next(e);
         }
-
-        req.user = userById;
-
-        next();
     }
     
 }; 

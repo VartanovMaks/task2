@@ -1,17 +1,45 @@
+const { responseCodesEnum } = require('../constants');
 const {userService} = require('../service');
+const { User } = require('../dataBase');
 
 module.exports = {
-    getAllUsers:(req,res)=>{
-        const users = userService.showAll();
-        res.json(users);
+    getAllUsers: async (req,res)=>{
+        try{
+            const users = await User.find({});
+            res
+            .status(responseCodesEnum.OK)
+            .json(users);
+        } catch (e){
+            next(e);
+        }
     },
-    addNewUser:(req,res)=>{
-        userService.addOne(req.body);
-        res.json(req.body);
+    addNewUser: async (req,res)=>{
+        try{
+            const checkedUser = userService.findUserByName(req.body);
+            if (!(checkedUser == null)){
+                console.log('user name not found. we may add', req.body);
+                const u = await User.create(req.body);
+                res
+                .status(responseCodesEnum.CREATED)
+                .json(req.body);
+                return
+            }
+            res
+            .status(responseCodesEnum.NO_CONTENT)
+            .json(req.body);
+        }catch (e){
+          console.log(e);
+        }
     },
-    getUserById:(req,res)=>{
-        const user = userService.showOne(req.params.userId)
-        res.json(user);
+    getUserById: async (req,res)=>{
+        try{
+            const user = await User.findById(req.params.userId)
+            res
+            .status(responseCodesEnum.OK)
+            .json(user);
+        }catch (e){
+            next(e);
+        }
     },
     removeUserById:(req,res)=>{
         userService.deleteOne(req.params.userId);
