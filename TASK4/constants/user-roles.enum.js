@@ -1,6 +1,6 @@
 module.exports = {
-    ADMIN: 'admin',
-    MANAGER: 'manager',
-    USER: 'user',
-    CUSTOMER: 'customer'
-  };
+  ADMIN: 'admin',
+  MANAGER: 'manager',
+  USER: 'user',
+  CUSTOMER: 'customer'
+};
