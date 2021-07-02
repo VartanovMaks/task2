@@ -5,7 +5,12 @@ const mongoose = require('mongoose');
 const { rootRouter, userRouter } = require('./router');
 
 const app = express();
-mongoose.connect('mongodb://localhost:27017/feb-2021', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/feb-2021',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
