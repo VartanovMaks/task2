@@ -14,10 +14,14 @@ module.exports = {
   },
   addNewUser: async (req, res, next) => {
     try {
-      await User.create(req.body);
-      res
-        .status(responseCodesEnum.CREATED)
-        .json(req.body);
+      if (!req.userExists) {
+        await User.create(req.body);
+        res
+          .status(responseCodesEnum.CREATED)
+          .json(req.body);
+      } else {
+        res.json(`Name ${req.body.name} already in base`);
+      }
     } catch (e) {
       next(e);
     }
