@@ -9,6 +9,10 @@ userRouter.post('/',
   userController.addNewUser);
 userRouter.get('/:userId', userMiddleware.checkUserIdExists, userController.getUserById);
 userRouter.delete('/:userId', userMiddleware.checkUserIdExists, userController.removeUserById);
-userRouter.post('/:userId', userMiddleware.checkUserIdExists, userController.editUserById);
+userRouter.post('/:userId',
+  userMiddleware.checkUserIdExists,
+  userMiddleware.checkUserNameExists,
+  userMiddleware.checkUserEmailUniq,
+  userController.editUserById);
 
 module.exports = userRouter;

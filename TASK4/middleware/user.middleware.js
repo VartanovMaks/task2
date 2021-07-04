@@ -23,11 +23,17 @@ module.exports = {
   checkUserNameExists: async (req, res, next) => {
     try {
       const { name } = req.body;
+      const { userId } = req.params;
 
       const foundedUser = await User.findOne({ name });
 
-      if (foundedUser) {
+      if (foundedUser && !userId) {
         throw new ErrorHandler(400, errors.WRONG_NAME.message, errors.WRONG_NAME.code);
+      }
+      if (foundedUser && userId) {
+        if (userId !== foundedUser.id) {
+          throw new ErrorHandler(400, errors.WRONG_NAME.message, errors.WRONG_NAME.code);
+        }
       }
 
       next();
@@ -35,14 +41,21 @@ module.exports = {
       next(e);
     }
   },
+
   checkUserEmailUniq: async (req, res, next) => {
     try {
       const { email } = req.body;
+      const { userId } = req.params;
 
       const foundedUser = await User.findOne({ email });
 
-      if (foundedUser) {
+      if (foundedUser && !userId) {
         throw new ErrorHandler(400, errors.WRONG_EMAIL.message, errors.WRONG_EMAIL.code);
+      }
+      if (foundedUser && userId) {
+        if (userId !== foundedUser.id) {
+          throw new ErrorHandler(400, errors.WRONG_EMAIL.message, errors.WRONG_EMAIL.code);
+        }
       }
 
       next();
