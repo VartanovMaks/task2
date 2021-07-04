@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', rootRouter);
 app.use('/users', userRouter);
+app.use('*', _notFoundHandler);
 app.use(_hadleErrors);
 
 app.listen(3000, () => {
@@ -30,4 +31,11 @@ function _hadleErrors(err, req, res, next) {
       message: err.message || 'Unknown error',
       customCode: err.code || 0
     });
+}
+
+function _notFoundHandler(err, req, res, next) {
+  next({
+    status: err.status || 404,
+    message: err.message || 'Rout not fond'
+  });
 }
