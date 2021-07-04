@@ -1,3 +1,4 @@
+const { passwordHasher } = require('../helpers');
 const { responseCodesEnum } = require('../constants');
 const { User } = require('../database');
 
@@ -14,10 +15,14 @@ module.exports = {
   },
   addNewUser: async (req, res, next) => {
     try {
-      await User.create(req.body);
+      const { password } = req.body;
+
+      const hashedPassword = await passwordHasher.hash(password);
+      const createdUser = await User.create({ ...req.body, password: hashedPassword });
+
       res
         .status(responseCodesEnum.CREATED)
-        .json(req.body);
+        .json(createdUser);
     } catch (e) {
       next(e);
     }
