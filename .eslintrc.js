@@ -105,7 +105,8 @@ module.exports = {
     'no-unused-expressions': 'error',
     'no-unused-vars': [
       'error',
-      { varsIgnorePattern: '/ctx/u' },
+      { varsIgnorePattern: 'ctx' },
+      // { varsIgnorePattern: '/ctx/u' },
       // { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
     ],
     'no-use-before-define': [

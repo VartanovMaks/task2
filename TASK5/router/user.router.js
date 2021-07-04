@@ -1,9 +1,11 @@
 const userRouter = require('express').Router();
 const { userController } = require('../controller');
 const { userMiddleware } = require('../middleware');
+const { userJoiMiddleware } = require('../middleware');
 
 userRouter.get('/', userController.getAllUsers);
 userRouter.post('/',
+  userJoiMiddleware.checkUserValidity,
   userMiddleware.checkUserNameExists,
   userMiddleware.checkUserEmailUniq,
   userController.addNewUser);
