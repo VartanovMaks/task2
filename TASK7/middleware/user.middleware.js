@@ -36,6 +36,8 @@ module.exports = {
         }
       }
 
+      req.user = foundedUser;
+
       next();
     } catch (e) {
       next(e);

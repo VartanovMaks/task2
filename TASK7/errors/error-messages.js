@@ -18,5 +18,9 @@ module.exports = {
   WRONG_EMAIL_OR_PASSWORD: {
     message: 'Password or email doesn\'t match',
     code: '401.1'
+  },
+  WRONG_NAME_OR_PASSWORD: {
+    message: 'Password or user name not found',
+    code: '401.2'
   }
 };

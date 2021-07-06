@@ -1,12 +1,9 @@
 const rootRouter = require('express').Router();
 const { loginController } = require('../controller');
+const { loginMiddleware } = require('../middleware');
 
-rootRouter.get('/', (req, res) => res.json('home page'));
-rootRouter.get('/login', (req, res) => res.json('Login page'));
-rootRouter.get('/register', (req, res) => res.json('Register page'));
-
-rootRouter.post('/', (req, res) => res.json('post from home page'));
-rootRouter.post('/login', loginController.loginUser);
-rootRouter.post('/register', (req, res) => res.json('post from Register page'));
+rootRouter.post('/login', loginMiddleware.checkLoginName, loginController.loginUser);
+rootRouter.post('/logout', (req, res) => res.json('post from logout page'));
+rootRouter.post('/refresh', (req, res) => res.json('post from refresh token page'));
 
 module.exports = rootRouter;

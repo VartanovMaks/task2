@@ -1,22 +1,28 @@
-const { passwordHasher } = require('../helpers');
-const { User } = require('../database');
+const { passwordHasher } = require('../services');
 const ErrorHandler = require('../errors/ErrorHandler');
 const errors = require('../errors/error-messages');
+const { createTokenPair } = require('../services');
+const { TokenBase } = require('../database');
 
 module.exports = {
   loginUser: async (req, res) => {
     try {
-      const { password, name } = req.body;
-
-      const foundedUser = await User.findOne({ name });
-
-      if (!foundedUser) {
+      if (!req.user) {
         throw new ErrorHandler(404, errors.USER_NOT_FOUND.message, errors.USER_NOT_FOUND.code);
       }
 
-      await passwordHasher.compare(foundedUser.password, password);
+      const { password, _id } = req.body;
+      const hashedPassword = req.user.password;
 
-      res.json(foundedUser);
+      await passwordHasher.compare(hashedPassword, password);
+
+      const createdTokens = createTokenPair();
+
+      await TokenBase.create({ ...createdTokens, userId: _id });
+
+      delete req.user._id;
+
+      res.json({ ...createdTokens, user: req.user });
     } catch (e) {
       res.json(e.message);
     }
