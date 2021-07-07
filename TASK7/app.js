@@ -2,6 +2,9 @@ const express = require('express');
 // eslint-disable-next-line spaced-comment
 //const path = require('path');
 const mongoose = require('mongoose');
+// eslint-disable-next-line import/no-unresolved
+require('dotenv').config();
+
 const { rootRouter, userRouter } = require('./router');
 
 const app = express();
@@ -25,9 +28,12 @@ app.listen(3000, () => {
 });
 // eslint-disable-next-line no-unused-vars
 function _hadleErrors(err, req, res, next) {
+  console.log(err);
+  console.log(err.status, err.message, err.code);
   res
     .status(err.status)
     .json({
+      status: err.status,
       message: err.message || 'Unknown error',
       customCode: err.code || 0
     });

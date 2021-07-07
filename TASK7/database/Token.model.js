@@ -27,4 +27,4 @@ tokenSchema.pre('findOne', function() {
 
 module.exports = model(dataBaseTablesEnum.TOKEN, tokenSchema);
 
-module.exports = model('TokenBase', tokenSchema);
+// module.exports = model('TokenBase', tokenSchema);

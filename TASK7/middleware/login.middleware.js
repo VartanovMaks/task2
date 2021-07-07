@@ -1,6 +1,6 @@
 const { User } = require('../database');
 const ErrorHandler = require('../errors/ErrorHandler');
-const errors = require('../errors/error-messages');
+const Err = require('../errors/error-messages');
 
 module.exports = {
 
@@ -11,14 +11,17 @@ module.exports = {
       const foundedUser = await User.findOne({ name });
 
       if (!foundedUser) {
-        throw new ErrorHandler(401, errors.WRONG_NAME_OR_PASSWORD.message, errors.WRONG_NAME_OR_PASSWORD.code);
+        // throw new Error('Name not found');
+        throw new ErrorHandler(401, Err.WRONG_NAME_OR_PASSWORD.message, Err.WRONG_NAME_OR_PASSWORD.code);
       }
 
       req.user = foundedUser;
 
       next();
     } catch (e) {
-      next(e.message);
+      console.log(e.status, e.message, e.code);
+      console.log(e);
+      next(e);
     }
   },
 
