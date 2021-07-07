@@ -1,9 +1,9 @@
 const rootRouter = require('express').Router();
-const { loginController } = require('../controller');
-const { loginMiddleware } = require('../middleware');
+const { loginController, logoutController } = require('../controller');
+const { loginMiddleware, logoutMiddleware } = require('../middleware');
 
 rootRouter.post('/login', loginMiddleware.checkLoginName, loginController.loginUser);
-rootRouter.post('/logout', (req, res) => res.json('post from logout page'));
+rootRouter.post('/logout', logoutMiddleware.verifyAccessToken, logoutController.logoutUser);
 rootRouter.post('/refresh', (req, res) => res.json('post from refresh token page'));
 
 module.exports = rootRouter;

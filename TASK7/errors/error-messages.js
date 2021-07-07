@@ -22,5 +22,13 @@ module.exports = {
   WRONG_NAME_OR_PASSWORD: {
     message: 'Password or user name not found',
     code: '401.2'
+  },
+  TOKEN_NOT_PASSED: {
+    message: 'Token wasn\'t passed',
+    code: '401.3'
+  },
+  TOKEN_NOT_VALID: {
+    message: 'Invalid token',
+    code: '401.4'
   }
 };

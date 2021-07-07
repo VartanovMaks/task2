@@ -11,7 +11,6 @@ module.exports = {
       const foundedUser = await User.findOne({ name });
 
       if (!foundedUser) {
-        // throw new Error('Name not found');
         throw new ErrorHandler(401, Err.WRONG_NAME_OR_PASSWORD.message, Err.WRONG_NAME_OR_PASSWORD.code);
       }
 
@@ -19,8 +18,6 @@ module.exports = {
 
       next();
     } catch (e) {
-      console.log(e.status, e.message, e.code);
-      console.log(e);
       next(e);
     }
   },
