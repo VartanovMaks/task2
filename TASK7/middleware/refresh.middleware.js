@@ -5,31 +5,28 @@ const Err = require('../errors/error-messages');
 
 module.exports = {
 
-  verifyAccessToken: async (req, res, next) => {
+  verifyRefreshToken: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      const refreshToken = req.get('Authorization');
 
-      if (!token) {
+      if (!refreshToken) {
         throw new ErrorHandler(401, Err.TOKEN_NOT_PASSED.message, Err.TOKEN_NOT_PASSED.code);
       }
 
-      const foundedToken = await Token.findOne({ accessToken: token });
+      const foundedToken = await Token.findOne({ refreshToken });
 
       if (!foundedToken) {
         throw new ErrorHandler(401, Err.TOKEN_NOT_VALID.message, Err.TOKEN_NOT_VALID.code);
       }
-      await tokenService.checkTokenValid(token);
 
-      const verifiedToken = await Token.findOne({ accessToken: token });
-      if (!verifiedToken) {
-        throw new ErrorHandler(401, Err.TOKEN_NOT_VALID.message, Err.TOKEN_NOT_VALID.code);
-      }
+      await tokenService.checkTokenValid(refreshToken, 'refresh');
 
-      req.user = verifiedToken.user;
+      req.userId = foundedToken.userId;
 
       next();
     } catch (e) {
       next(e);
     }
-  }
+  },
+
 };
