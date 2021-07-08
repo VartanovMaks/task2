@@ -1,9 +1,10 @@
+const { constants: { AUTHORIZATION } } = require('../constants');
 const { Token } = require('../database');
 
 module.exports = {
   logoutUser: async (req, res, next) => {
     try {
-      const token = req.get('Authorization');
+      const token = req.get(AUTHORIZATION);
 
       await Token.deleteOne({ accessToken: token });
 

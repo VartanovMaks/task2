@@ -4,5 +4,7 @@ module.exports = {
   ACCESS_TOKEN_WORD: process.env.ACCESS_TOKEN_WORD || 'ACCESS_CODE WORD',
   REFRESH_TOKEN_WORD: process.env.REFRESH_TOKEN_WORD || 'REFRESH_CODE_WORD',
 
-  AUTHORIZATION: 'Authorization'
+  AUTHORIZATION: 'Authorization',
+  REFRESH: 'refresh',
+  ACCESS: 'Access'
 };

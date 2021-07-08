@@ -1,7 +1,8 @@
+const { constant: { REFRESH } } = require('../constants');
 const { Token } = require('../database');
-const { tokenService } = require('../services');
 const ErrorHandler = require('../errors/ErrorHandler');
 const Err = require('../errors/error-messages');
+const { tokenService } = require('../services');
 
 module.exports = {
 
@@ -19,7 +20,7 @@ module.exports = {
         throw new ErrorHandler(401, Err.TOKEN_NOT_VALID.message, Err.TOKEN_NOT_VALID.code);
       }
 
-      await tokenService.checkTokenValid(refreshToken, 'refresh');
+      await tokenService.checkTokenValid(refreshToken, REFRESH);
 
       req.userId = foundedToken.userId;
 

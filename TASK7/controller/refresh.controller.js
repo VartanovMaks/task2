@@ -1,3 +1,4 @@
+const { constants: { AUTHORIZATION } } = require('../constants');
 const { Token } = require('../database');
 const { User } = require('../database');
 const { tokenService } = require('../services');
@@ -5,7 +6,7 @@ const { tokenService } = require('../services');
 module.exports = {
   updateTokenPair: async (req, res, next) => {
     try {
-      const refreshToken = req.get('Authorization');
+      const refreshToken = req.get(AUTHORIZATION);
 
       await Token.findOneAndRemove({ refreshToken });
 

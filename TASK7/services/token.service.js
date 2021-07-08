@@ -1,5 +1,6 @@
 const jwtoken = require('jsonwebtoken');
 const { promisify } = require('util');
+const { constants: { ACCESS } } = require('../constants');
 
 const { ACCESS_TOKEN_WORD, REFRESH_TOKEN_WORD } = require('../constants/constant');
 
@@ -16,8 +17,8 @@ module.exports = {
     };
   },
 
-  checkTokenValid: async (token, tokenType = 'access') => {
-    const secretWord = tokenType === 'access' ? ACCESS_TOKEN_WORD : REFRESH_TOKEN_WORD;
+  checkTokenValid: async (token, tokenType = ACCESS) => {
+    const secretWord = tokenType === ACCESS ? ACCESS_TOKEN_WORD : REFRESH_TOKEN_WORD;
 
     await verifyPromise(token, secretWord);
   }
