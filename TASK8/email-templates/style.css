@@ -1,0 +1,14 @@
+.header{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+.footer{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+}
+.content{
+    background-color: lightblue;
+    border: 2px solid blue;
+}

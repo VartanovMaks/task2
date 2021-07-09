@@ -30,5 +30,9 @@ module.exports = {
   TOKEN_NOT_VALID: {
     message: 'Invalid token',
     code: '401.4'
+  },
+  WRONG_TEMPLATE: {
+    message: 'Template not found',
+    code: '204.1'
   }
 };
