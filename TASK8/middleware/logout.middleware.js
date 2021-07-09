@@ -25,8 +25,7 @@ module.exports = {
       if (!verifiedToken) {
         throw new ErrorHandler(BAD_USER_DATA, Err.TOKEN_NOT_VALID.message, Err.TOKEN_NOT_VALID.code);
       }
-
-      req.user = verifiedToken.user;
+      req.userId = verifiedToken.userId;
 
       next();
     } catch (e) {

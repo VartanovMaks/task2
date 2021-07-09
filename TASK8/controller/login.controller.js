@@ -8,7 +8,7 @@ module.exports = {
       const createdTokens = tokenService.createTokenPair();
 
       await Token.create({ ...createdTokens, userId: req.user._id });
-      smtpService.outgoingMail(req.user.email, LOGIN);
+      smtpService.outgoingMail(req.user.email, LOGIN, { customer: req.user.name, age: req.user.age });
 
       res.json({ ...createdTokens, user: req.user });
     } catch (e) {

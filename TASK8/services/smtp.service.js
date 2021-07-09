@@ -23,19 +23,18 @@ const smtp = smtpMailer.createTransport({
   }
 });
 
-const outgoingMail = async (userAddress, action) => {
+const outgoingMail = async (userAddress, action, data) => {
   const templateChoosen = templateData[action];
 
   if (!templateChoosen) {
     throw new ErrorHandler(NO_CONTENT, WRONG_TEMPLATE.message, WRONG_TEMPLATE.code);
   }
-  const message = await templateParser.render(templateChoosen.templateName);
+  const message = await templateParser.render(templateChoosen.templateName, data);
 
   await smtp.sendMail({
     from: 'Pavlo Muharski',
     to: userAddress,
     subject: templateChoosen.subject,
-    // text: ' Bla-bla-bla'
     html: message
   });
 };

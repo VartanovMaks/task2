@@ -67,4 +67,19 @@ module.exports = {
     }
   },
 
+  findUserById: async (req, res, next) => {
+    try {
+      const foundedUser = await User.findOne({ _id: req.userId });
+
+      if (!foundedUser) {
+        throw new ErrorHandler(BAD_REQUEST, errors.USER_ID_NOT_FOUND.message, errors.USER_ID_NOT_FOUND.code);
+      }
+      delete req.userId;
+      req.user = foundedUser;
+
+      next();
+    } catch (e) {
+      next(e);
+    }
+  }
 };
