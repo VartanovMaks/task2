@@ -1,3 +1,4 @@
+const { responseCodesEnum: { BAD_USER_DATA } } = require('../constants');
 const { constant: { REFRESH } } = require('../constants');
 const { Token } = require('../database');
 const ErrorHandler = require('../errors/ErrorHandler');
@@ -11,13 +12,13 @@ module.exports = {
       const refreshToken = req.get('Authorization');
 
       if (!refreshToken) {
-        throw new ErrorHandler(401, Err.TOKEN_NOT_PASSED.message, Err.TOKEN_NOT_PASSED.code);
+        throw new ErrorHandler(BAD_USER_DATA, Err.TOKEN_NOT_PASSED.message, Err.TOKEN_NOT_PASSED.code);
       }
 
       const foundedToken = await Token.findOne({ refreshToken });
 
       if (!foundedToken) {
-        throw new ErrorHandler(401, Err.TOKEN_NOT_VALID.message, Err.TOKEN_NOT_VALID.code);
+        throw new ErrorHandler(BAD_USER_DATA, Err.TOKEN_NOT_VALID.message, Err.TOKEN_NOT_VALID.code);
       }
 
       await tokenService.checkTokenValid(refreshToken, REFRESH);

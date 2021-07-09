@@ -11,7 +11,7 @@ userRouter.post('/',
   userController.addNewUser);
 userRouter.get('/:userId', userMiddleware.checkUserIdExists, userController.getUserById);
 userRouter.delete('/:userId', userMiddleware.checkUserIdExists, userController.removeUserById);
-userRouter.post('/:userId',
+userRouter.put('/:userId',
   userMiddleware.checkUserIdExists,
   userMiddleware.checkUserNameExists,
   userMiddleware.checkUserEmailUniq,

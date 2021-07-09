@@ -1,4 +1,4 @@
-const { constants: { AUTHORIZATION } } = require('../constants');
+const { constant: { AUTHORIZATION } } = require('../constants');
 const { Token } = require('../database');
 const { User } = require('../database');
 const { tokenService } = require('../services');

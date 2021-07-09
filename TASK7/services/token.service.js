@@ -1,6 +1,6 @@
 const jwtoken = require('jsonwebtoken');
 const { promisify } = require('util');
-const { constants: { ACCESS } } = require('../constants');
+const { constant: { ACCESS } } = require('../constants');
 
 const { ACCESS_TOKEN_WORD, REFRESH_TOKEN_WORD } = require('../constants/constant');
 

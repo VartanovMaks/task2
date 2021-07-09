@@ -1,3 +1,4 @@
+const { responseCodesEnum: { BAD_REQUEST } } = require('../constants');
 const { User } = require('../database');
 const ErrorHandler = require('../errors/ErrorHandler');
 const errors = require('../errors/error-messages');
@@ -9,7 +10,7 @@ module.exports = {
       const userById = await User.findById(userId);
 
       if (!userById) {
-        throw new ErrorHandler(400, errors.USER_ID_NOT_FOUND.message, errors.USER_ID_NOT_FOUND.code);
+        throw new ErrorHandler(BAD_REQUEST, errors.USER_ID_NOT_FOUND.message, errors.USER_ID_NOT_FOUND.code);
       }
 
       req.user = userById;
@@ -28,11 +29,11 @@ module.exports = {
       const foundedUser = await User.findOne({ name });
 
       if (foundedUser && !userId) {
-        throw new ErrorHandler(400, errors.WRONG_NAME.message, errors.WRONG_NAME.code);
+        throw new ErrorHandler(BAD_REQUEST, errors.WRONG_NAME.message, errors.WRONG_NAME.code);
       }
       if (foundedUser && userId) {
         if (userId !== foundedUser.id) {
-          throw new ErrorHandler(400, errors.WRONG_NAME.message, errors.WRONG_NAME.code);
+          throw new ErrorHandler(BAD_REQUEST, errors.WRONG_NAME.message, errors.WRONG_NAME.code);
         }
       }
 
@@ -52,11 +53,11 @@ module.exports = {
       const foundedUser = await User.findOne({ email });
 
       if (foundedUser && !userId) {
-        throw new ErrorHandler(400, errors.WRONG_EMAIL.message, errors.WRONG_EMAIL.code);
+        throw new ErrorHandler(BAD_REQUEST, errors.WRONG_EMAIL.message, errors.WRONG_EMAIL.code);
       }
       if (foundedUser && userId) {
         if (userId !== foundedUser.id) {
-          throw new ErrorHandler(400, errors.WRONG_EMAIL.message, errors.WRONG_EMAIL.code);
+          throw new ErrorHandler(BAD_REQUEST, errors.WRONG_EMAIL.message, errors.WRONG_EMAIL.code);
         }
       }
 

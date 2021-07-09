@@ -1,3 +1,4 @@
+const { responseCodesEnum: { BAD_USER_DATA } } = require('../constants');
 const { User } = require('../database');
 const ErrorHandler = require('../errors/ErrorHandler');
 const Err = require('../errors/error-messages');
@@ -11,7 +12,7 @@ module.exports = {
       const foundedUser = await User.findOne({ name });
 
       if (!foundedUser) {
-        throw new ErrorHandler(401, Err.WRONG_NAME_OR_PASSWORD.message, Err.WRONG_NAME_OR_PASSWORD.code);
+        throw new ErrorHandler(BAD_USER_DATA, Err.WRONG_NAME_OR_PASSWORD.message, Err.WRONG_NAME_OR_PASSWORD.code);
       }
 
       req.user = foundedUser;
