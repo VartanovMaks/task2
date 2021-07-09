@@ -8,7 +8,7 @@ module.exports = {
       if (error) {
         throw new Error(error.details[0].message);
       }
-
+      console.log('checkUserValidity');
       next();
     } catch (e) {
       res.json(e.message);

@@ -1,5 +1,6 @@
 module.exports = {
   LOGIN: 'login',
   LOGOUT: 'logout',
-  REFRESH: 'refresh'
+  REFRESH: 'refresh',
+  REGISTER: 'register'
 };

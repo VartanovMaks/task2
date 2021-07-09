@@ -19,7 +19,7 @@ module.exports = {
 
       const hashedPassword = await passwordHasher.hash(password);
       const createdUser = await User.create({ ...req.body, password: hashedPassword });
-
+      console.log('checkUserIdExists');
       res
         .status(responseCodesEnum.CREATED)
         .json(createdUser);

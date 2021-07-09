@@ -4,3 +4,4 @@ module.exports.refreshMiddleware = require('./refresh.middleware');
 module.exports.userMiddleware = require('./user.middleware');
 module.exports.userJoiMiddleware = require('./user-joi.middleware');
 module.exports.passwordMiddleware = require('./passwordCompare.middleware');
+module.exports.mailMiddleware = require('./mail.middleware');

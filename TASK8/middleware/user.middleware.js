@@ -14,7 +14,7 @@ module.exports = {
       }
 
       req.user = userById;
-
+      console.log('checkUserIdExists');
       next();
     } catch (e) {
       next(e);
@@ -60,7 +60,7 @@ module.exports = {
           throw new ErrorHandler(BAD_REQUEST, errors.WRONG_EMAIL.message, errors.WRONG_EMAIL.code);
         }
       }
-
+      console.log('checkUserIdExists');
       next();
     } catch (e) {
       next(e);
