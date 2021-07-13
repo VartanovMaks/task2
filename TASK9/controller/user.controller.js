@@ -1,6 +1,12 @@
+const fs = require('fs');
+const path = require('path');
+const uuid = require('uuid').v1;
+const { promisify } = require('util');
 const { passwordHasher } = require('../services');
 const { responseCodesEnum } = require('../constants');
 const { User } = require('../database');
+
+const mkdirPromise = promisify(fs.mkdir);
 
 module.exports = {
   getAllUsers: async (req, res, next) => {
@@ -15,11 +21,19 @@ module.exports = {
   },
   addNewUser: async (req, res, next) => {
     try {
-      const { password } = req.body;
+      const { body: { password }, avatar } = req;
 
       const hashedPassword = await passwordHasher.hash(password);
       const createdUser = await User.create({ ...req.body, password: hashedPassword });
-      console.log('checkUserIdExists');
+      const { _id } = createdUser;
+
+      if (avatar) {
+        const { finalPath, pathAfterStatic } = await _filePathBuilder(avatar.name, _id, 'users', 'photos');
+        await avatar.mv(finalPath);
+        await User.updateOne({ _id }, { avatar: pathAfterStatic });
+      }
+      // const normalizedUser = userHelper.userNormalizator(createdUser.toJSON());
+      // created user should be changed on normalizeduser
       res
         .status(responseCodesEnum.CREATED)
         .json(createdUser);
@@ -57,5 +71,19 @@ module.exports = {
       next(e);
     }
   }
-
 };
+async function _filePathBuilder(fileName, itemId, itemType, dirType) {
+  const pathWithoutStatic = path.join(itemType, itemId.toString(), dirType);
+  const fileFullPath = path.join(process.cwd(), 'static', pathWithoutStatic);
+
+  const fileExtension = fileName.split('.').pop();
+  const fileNewName = `${uuid()}.${fileExtension}`;
+  const finalPath = path.join(fileFullPath, fileNewName);
+
+  await mkdirPromise(fileFullPath, { recursive: true });
+
+  return {
+    finalPath,
+    pathAfterStatic: path.join(pathWithoutStatic, fileNewName)
+  };
+}

@@ -52,6 +52,20 @@ module.exports = {
     } catch (e) {
       next(e);
     }
+  },
+
+  checkAvatar: (req, res, next) => {
+    try {
+      if (req.photos.length > 1) {
+        throw new Error('Just one avatar per user');
+      }
+
+      [req.avatar] = req.photos;
+
+      next();
+    } catch (e) {
+      next(e);
+    }
   }
 
 };
