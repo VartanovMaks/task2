@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid').v1;
 const { promisify } = require('util');
-const { passwordHasher } = require('../services');
+const { passwordHasher, normalizator } = require('../services');
 const { responseCodesEnum } = require('../constants');
 const { User } = require('../database');
 
@@ -11,7 +11,7 @@ const mkdirPromise = promisify(fs.mkdir);
 module.exports = {
   getAllUsers: async (req, res, next) => {
     try {
-      const users = await User.find({});
+      const users = await User.find({}).lean();
       res
         .status(responseCodesEnum.OK)
         .json(users);
@@ -32,18 +32,24 @@ module.exports = {
         await avatar.mv(finalPath);
         await User.updateOne({ _id }, { avatar: pathAfterStatic });
       }
-      // const normalizedUser = userHelper.userNormalizator(createdUser.toJSON());
+      const normalizedUser = normalizator.deleteExtraFields(createdUser.toJSON(), [
+        'password',
+        'updatedAt',
+        'createdAt'
+      ]);
       // created user should be changed on normalizeduser
       res
         .status(responseCodesEnum.CREATED)
-        .json(createdUser);
+        .json(normalizedUser);
     } catch (e) {
       next(e);
     }
   },
   getUserById: async (req, res, next) => {
     try {
-      const user = await User.findById(req.params.userId);
+      const user = await User.findById(req.params.userId).lean();
+      delete user._id;
+      delete user.password;
       res
         .status(responseCodesEnum.OK)
         .json(user);
