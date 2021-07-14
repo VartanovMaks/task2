@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const { rootRouter, userRouter } = require('./router');
+const connection = require('./database/MySQL');
 
 const app = express();
 mongoose.connect('mongodb://localhost:27017/feb-2021',
@@ -21,6 +22,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.use(fileLoad());
+
+app.get('/mysql', async (req, res) => {
+  let newVar = {};
+
+  try {
+    newVar = await connection.query(`SELECT * FROM students WHERE id=${req.query.id}`);
+  } catch (e) {
+    console.log(e.message);
+  }
+
+  res.json(newVar[0]);
+});
+
 app.use('/', rootRouter);
 app.use('/users', userRouter);
 app.use('*', _notFoundHandler);
