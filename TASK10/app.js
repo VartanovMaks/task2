@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-unresolved
 require('dotenv').config();
 
-const { rootRouter, userRouter } = require('./router');
+const { rootRouter, userRouter, studentRouter } = require('./router');
 const connection = require('./database/MySQL');
 
 const app = express();
@@ -37,6 +37,7 @@ app.use(fileLoad());
 connection.getInstance().setModels();
 
 app.use('/', rootRouter);
+app.use('/student', studentRouter);
 app.use('/users', userRouter);
 app.use('*', _notFoundHandler);
 app.use(_hadleErrors);
