@@ -23,17 +23,18 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 app.use(fileLoad());
 
-app.get('/mysql', async (req, res) => {
-  let newVar = {};
+// app.get('/mysql', async (req, res) => {
+//   let newVar = {};
 
-  try {
-    newVar = await connection.query(`SELECT * FROM students WHERE id=${req.query.id}`);
-  } catch (e) {
-    console.log(e.message);
-  }
+//   try {
+//     newVar = await connection.query(`SELECT * FROM students WHERE id=${req.query.id}`);
+//   } catch (e) {
+//     console.log(e.message);
+//   }
 
-  res.json(newVar[0]);
-});
+//   res.json(newVar[0]);
+// });
+connection.getInstance().setModels();
 
 app.use('/', rootRouter);
 app.use('/users', userRouter);
